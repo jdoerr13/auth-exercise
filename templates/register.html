@@ -1,0 +1,29 @@
+{% extends 'base.html'  %}
+
+{% block content %}
+
+<h1 class="display-1">Sign Up</h1>
+<p class="lead">Register below to join our application!</p>
+
+<!-- USING POST HERE WILL SUBMIT TO THE SAME URL THAT WE ARE CURRENTLY ON, WHICH IS /REGISTER AS A GET REQUEST -->
+<form method="POST">
+
+  {{ form.hidden_tag() }}
+<!-- THIS IS A JINJA LOOP -->
+  {% for field in form
+    if field.widget.input_type != 'hidden' %}
+  <p>
+    {{ field.label }}
+    <!-- get bootstrap form this way -->
+    {{ field(class_="form-control") }}
+
+    {% for error in field.errors %}
+    <span class="form-text text-danger">{{ error }}</span>
+    {% endfor %}
+  </p>
+  {% endfor %}
+
+  <button class="btn btn-success" type="submit">Register</button>
+
+</form>
+{% endblock %}

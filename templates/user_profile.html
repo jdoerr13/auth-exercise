@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>User Profile</h1>
+  <h2>Greetings {{ user.username }}</h2>
+
+  <h3>User Information</h3>
+  <ul>
+    <li><strong>Username:</strong> {{ user.username }}</li>
+    <li><strong>Email:</strong> {{ user.email }}</li>
+    <li><strong>First Name:</strong> {{ user.first_name }}</li>
+    <li><strong>Last Name:</strong> {{ user.last_name }}</li>
+  </ul>
+
+  <h3>Feedback</h3>
+  <ul>
+    <!-- Add Feedback Button -->
+<a href="{{ url_for('add_feedback', username=user.username) }}" class="btn btn-primary">Add Feedback</a>
+
+    {% for feedback in user.user_feedbacks %}
+    <li>
+      <p><strong>Title:</strong> {{ feedback.title }}</p>
+      <p><strong>Content:</strong> {{ feedback.content }}</p>
+      <!-- Add edit and delete buttons here -->
+    </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Add a form to submit new feedback here -->
+
+  <!-- Add a button to delete the user's account here -->
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Feedback</h1>
+
+<!-- Display the current feedback -->
+<div>
+  {% for feed in feedback %}
+  <div class="card my-4">
+    <div class="card-body">
+      <h5 class="card-title text-info">
+        {{ feed.user.username }} 
+        {% if session['user_id'] == feed.username %}
+        <form style="display:inline;" action="/feedback/{{ feed.id }}" method="POST">
+          <button class="btn btn-sm btn-danger">
+            <i class="fas fa-trash"></i>
+          </button>
+        </form>
+        {% endif %}
+      </h5>
+      <h6 class="card-subtitle mb-2 text-muted">Date goes here</h6>
+
+      <p class="card-text">
+        {{ feed.text }}
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Add Feedback Form Here -->
+<h2>Add Feedback</h2>
+
+<form method="POST" action="{{ url_for('add_feedback', username=user.username) }}">
+  {{ feedback_form.hidden_tag() }}
+
+  <!-- Title Input Field -->
+  <div class="form-group">
+    {{ feedback_form.title.label(class_="control-label") }}
+    {{ feedback_form.title(class_="form-control") }}
+    {% for error in feedback_form.title.errors %}
+    <span class="text-danger">{{ error }}</span>
+    {% endfor %}
+  </div>
+
+  <!-- Content Textarea Field -->
+  <div class="form-group">
+    {{ feedback_form.content.label(class_="control-label") }}
+    {{ feedback_form.content(class_="form-control") }}
+    {% for error in feedback_form.content.errors %}
+    <span class="text-danger">{{ error }}</span>
+    {% endfor %}
+  </div>
+
+  <button class="btn btn-primary" type="submit">Add Feedback</button>
+</form>
+</div>
+{% endblock %}
